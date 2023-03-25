@@ -123,7 +123,7 @@ public class Operations {
         return r;
     }
 
-    private Polynomial multiplication(Polynomial a, Polynomial b) { d d
+    private Polynomial multiplication(Polynomial a, Polynomial b) {
         Polynomial r = new Polynomial();
 
         for (Integer j : a.getPolynomials().keySet()) {
