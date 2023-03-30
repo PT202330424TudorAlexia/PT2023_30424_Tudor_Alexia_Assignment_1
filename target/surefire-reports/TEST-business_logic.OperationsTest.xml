@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="3" failures="0" name="business_logic.OperationsTest" time="0.002" errors="0" skipped="0">
+<testsuite tests="7" failures="1" name="business_logic.OperationsTest" time="0.008" errors="0" skipped="0">
   <properties>
     <property name="idea.version" value="2022.2.4"/>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
@@ -64,7 +64,38 @@
     <property name="sun.stdout.encoding" value="UTF-8"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="business_logic.OperationsTest" name="testGetP1" time="0.002"/>
-  <testcase classname="business_logic.OperationsTest" name="testSetP1" time="0"/>
-  <testcase classname="business_logic.OperationsTest" name="testCompute" time="0"/>
+  <testcase classname="business_logic.OperationsTest" name="testComputeAdditionEqual" time="0.004"/>
+  <testcase classname="business_logic.OperationsTest" name="testGetP1" time="0"/>
+  <testcase classname="business_logic.OperationsTest" name="testComputeMultiplicationOperation" time="0"/>
+  <testcase classname="business_logic.OperationsTest" name="testComputeIntegrationOperation" time="0"/>
+  <testcase classname="business_logic.OperationsTest" name="testComputeDerivationOperation" time="0"/>
+  <testcase classname="business_logic.OperationsTest" name="testComputewhenArgumentsAreEqualAndOperationIsMinusThenResultIsZero" time="0"/>
+  <testcase classname="business_logic.OperationsTest" name="testComputeDivideOperation" time="0.004">
+    <failure message="Result should be 8.0x^2 - 7.0x - 1.0 expected:&lt;[0.6]&gt; but was:&lt;[8.0x^2 - 7.0x - 1.0]&gt;" type="junit.framework.ComparisonFailure">junit.framework.ComparisonFailure: Result should be 8.0x^2 - 7.0x - 1.0 expected:&lt;[0.6]&gt; but was:&lt;[8.0x^2 - 7.0x - 1.0]&gt;
+	at junit.framework.Assert.assertEquals(Assert.java:100)
+	at junit.framework.TestCase.assertEquals(TestCase.java:253)
+	at business_logic.OperationsTest.testComputeDivideOperation(OperationsTest.java:129)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at junit.framework.TestCase.runTest(TestCase.java:177)
+	at junit.framework.TestCase.runBare(TestCase.java:142)
+	at junit.framework.TestResult$1.protect(TestResult.java:122)
+	at junit.framework.TestResult.runProtected(TestResult.java:142)
+	at junit.framework.TestResult.run(TestResult.java:125)
+	at junit.framework.TestCase.run(TestCase.java:130)
+	at junit.framework.TestSuite.runTest(TestSuite.java:241)
+	at junit.framework.TestSuite.run(TestSuite.java:236)
+	at org.junit.internal.runners.JUnit38ClassRunner.run(JUnit38ClassRunner.java:90)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+</failure>
+  </testcase>
 </testsuite>

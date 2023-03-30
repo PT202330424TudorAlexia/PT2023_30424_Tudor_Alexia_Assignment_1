@@ -1,6 +1,8 @@
 package graphic_user_interface;
 
+import business_logic.InputException;
 import business_logic.Operations;
+import business_logic.ValidString;
 import data_logic.Polynomial;
 
 import javax.swing.*;
@@ -13,10 +15,12 @@ public class Graphic implements ActionListener {
     JTextField textField1;
     JTextField textField2;
     JTextField textField3;
+    JTextField textField4;
 
     JLabel label1;
     JLabel label2;
     JLabel label3;
+    JLabel label4;
 
     JButton[] functionButtons = new JButton[10];
     JButton addButton, substractButton, divideButton, multiplyButton, integrateButton, derivateButton, clearButton;
@@ -24,7 +28,7 @@ public class Graphic implements ActionListener {
 
     Font font = new Font("Arial", Font.BOLD, 15);
 
-    String firstpoly, secondpoly, result;
+    String firstpoly, secondpoly, result, rest;
 
     public Graphic() {
         frame = new JFrame();
@@ -114,29 +118,38 @@ public class Graphic implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+/*
+        try {
+            ValidString.isStringValid(textField1.getText());
+            ValidString.isStringValid(textField2.getText());
+
+        } catch (InputException exception) {
+            System.out.println("Bad");
+        }
+*/
         if (e.getSource() == addButton) {
 
-            Polynomial polynomialone= new Polynomial(textField1.getText());
-            Polynomial polynomialtwo= new Polynomial(textField2.getText());
+            Polynomial polynomialone = new Polynomial(textField1.getText());
+            Polynomial polynomialtwo = new Polynomial(textField2.getText());
 
-            Operations operations=new Operations();
-            Polynomial r= new Polynomial();
+            Operations operations = new Operations();
+            Polynomial r = new Polynomial();
             operations.setP1(polynomialone);
-            r= operations.compute(polynomialtwo,"add");
-            result=r.finalPolynomial(r);
+            r = operations.compute(polynomialtwo, "add");
+            result = r.finalPolynomial(r);
 
             textField3.setText(result);
         }
 
         if (e.getSource() == substractButton) {
-            Polynomial polynomialone= new Polynomial(textField1.getText());
-            Polynomial polynomialtwo= new Polynomial(textField2.getText());
+            Polynomial polynomialone = new Polynomial(textField1.getText());
+            Polynomial polynomialtwo = new Polynomial(textField2.getText());
 
-            Operations operations=new Operations();
-            Polynomial r= new Polynomial();
+            Operations operations = new Operations();
+            Polynomial r = new Polynomial();
             operations.setP1(polynomialone);
-            r= operations.compute(polynomialtwo,"sub");
-            result= r.finalPolynomial(r);
+            r = operations.compute(polynomialtwo, "sub");
+            result = r.finalPolynomial(r);
 
             textField3.setText(result);
         }
@@ -147,59 +160,55 @@ public class Graphic implements ActionListener {
         }
 
         if (e.getSource() == multiplyButton) {
-            Polynomial polynomialone= new Polynomial(textField1.getText());
-            Polynomial polynomialtwo= new Polynomial(textField2.getText());
+            Polynomial polynomialone = new Polynomial(textField1.getText());
+            Polynomial polynomialtwo = new Polynomial(textField2.getText());
 
-            Operations operations=new Operations();
-            Polynomial r= new Polynomial();
+            Operations operations = new Operations();
+            Polynomial r = new Polynomial();
             operations.setP1(polynomialone);
-            r= operations.compute(polynomialtwo,"mul");
-            result= r.finalPolynomial(r);
+            r = operations.compute(polynomialtwo, "mul");
+            result = r.finalPolynomial(r);
 
             textField3.setText(result);
         }
 
         if (e.getSource() == divideButton) {
-            Polynomial polynomialone= new Polynomial(textField1.getText());
-            Polynomial polynomialtwo= new Polynomial(textField2.getText());
+            Polynomial polynomialone = new Polynomial(textField1.getText());
+            Polynomial polynomialtwo = new Polynomial(textField2.getText());
 
-            Operations operations=new Operations();
-            Polynomial r= new Polynomial();
+            Operations operations = new Operations();
+            Polynomial r = new Polynomial();
             operations.setP1(polynomialone);
-            r= operations.compute(polynomialtwo,"divide");
-            result= r.finalPolynomial(r);
+            r = operations.compute(polynomialtwo, "divide");
+            result = r.finalPolynomial(r);
 
             textField3.setText(result);
         }
 
         if (e.getSource() == integrateButton) {
-            Polynomial polynomialone= new Polynomial(textField1.getText());
+            Polynomial polynomialone = new Polynomial(textField1.getText());
 
-            Operations operations=new Operations();
-            Polynomial r= new Polynomial();
+            Operations operations = new Operations();
+            Polynomial r = new Polynomial();
             operations.setP1(polynomialone);
-            r= operations.compute(polynomialone,"integration");
-            result=r.finalPolynomial(r);
+            r = operations.compute(polynomialone, "integration");
+            result = r.finalPolynomial(r);
 
             textField3.setText(result);
         }
 
         if (e.getSource() == derivateButton) {
-            Polynomial polynomialone= new Polynomial(textField1.getText());
+            Polynomial polynomialone = new Polynomial(textField1.getText());
 
-            Operations operations=new Operations();
-            Polynomial r= new Polynomial();
+            Operations operations = new Operations();
+            Polynomial r = new Polynomial();
             operations.setP1(polynomialone);
-            r= operations.compute(polynomialone,"derivation");
-            result=r.finalPolynomial(r);
+            r = operations.compute(polynomialone, "derivation");
+            result = r.finalPolynomial(r);
 
             textField3.setText(result);
         }
 
-    }
-
-    public static void main(String[] args) {
-        Graphic graphic = new Graphic();
     }
 
 }

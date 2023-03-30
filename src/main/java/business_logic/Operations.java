@@ -1,7 +1,8 @@
 package business_logic;
 
 import data_logic.Polynomial;
-import jdk.dynalink.Operation;
+
+import java.util.TreeMap;
 
 public class Operations {
 
@@ -84,26 +85,47 @@ public class Operations {
 
     private Polynomial division(Polynomial a, Polynomial b) {
         Polynomial r = new Polynomial();
+        Polynomial d = new Polynomial();
+        Polynomial c = new Polynomial();
+        TreeMap<Integer, Double> atree = a.orderHashMap(a.polynomials);
+        TreeMap<Integer, Double> btree = b.orderHashMap(b.polynomials);
+        TreeMap<Integer, Double> rtree = r.orderHashMap(r.polynomials);
+        Operations o = new Operations();
 
-        //while(grad(d)>=grad(i))
-        //coefd=getCoefMax(d)
-        //coefi=getCoefMax(i)
-        //gradd=getGradMax(d)
-        //gradi=getGradMax(i)
-        //coefc=coefd/coefi
-        //gradc=gradd-gradi
-        //c.put(coefc,gradc)
+        Integer highest_a, highest_b, highest_c = 0;
 
-        /*
+        Double coefa, coefb, coefc = 1.0;
 
-        Polynom aux=new Polynom(coefc,gradc)
-        c=c.add(aux)
-        Polynom aux2=i.multiply(aux)
-        d=d.substract(aux2)
+        highest_a = a.getHighestGrade(atree);
+        highest_b = b.getHighestGrade(btree);
 
-         */
+        coefa = a.getCoeff(atree);
+        coefb = b.getCoeff(btree);
+        d.polynomials.putAll(a.polynomials);
 
-        return r;
+        while (highest_a >= highest_b) {
+            coefc = coefa / coefb;
+            highest_c = highest_a - highest_b;
+
+            Polynomial aux = new Polynomial();
+            aux.polynomials.put(highest_c, coefc);
+            o.setP1(c);
+            c = o.compute(aux, "add");
+            Polynomial aux2 = new Polynomial();
+            o.setP1(aux);
+            aux2 = o.compute(b, "mul");
+            o.setP1(d);
+            r = o.compute(aux2, "sub");
+
+            rtree = r.orderHashMap(r.polynomials);
+            highest_a = r.getNextHighestGrade(rtree);
+            coefa = r.getCoeff(rtree);
+            d = new Polynomial();
+            d.polynomials.putAll(r.polynomials);
+
+        }
+
+        return c;
     }
 
     private Polynomial integration(Polynomial a) {
@@ -132,14 +154,13 @@ public class Operations {
                 if (b.getPolynomials().containsKey(i)) {
                     c = b.getPolynomials().get(i);
 
-                    if (r.getPolynomials().containsKey(i+j))
-                        r.polynomials.put(j + i, c * a.getPolynomials().get(j)+ r.getPolynomials().get(i+j));
+                    if (r.getPolynomials().containsKey(i + j))
+                        r.polynomials.put(j + i, c * a.getPolynomials().get(j) + r.getPolynomials().get(i + j));
                     else r.polynomials.put(j + i, c * a.getPolynomials().get(j));
 
                 }
             }
         }
-
 
 
         return r;

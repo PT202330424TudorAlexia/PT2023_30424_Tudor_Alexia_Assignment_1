@@ -1,7 +1,5 @@
 package data_logic;
 
-import graphic_user_interface.Graphic;
-
 import java.util.Collections;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -14,39 +12,38 @@ public class Polynomial {
     }
 
     public Polynomial(String input) {
-        this.polynomials=polynomialStringToInt(input);
+        this.polynomials = polynomialStringToHash(input);
     }
 
-    public HashMap polynomialStringToInt( String input) {
-        HashMap<Integer, Double> degreeToCoeff = new HashMap();
+    public HashMap polynomialStringToHash(String input) {
+        HashMap<Integer, Double> degreeAndCoeffs = new HashMap();
 
         input = input.replace("-", "+-");
 
         String[] parts = input.split("\\+");
-        String x;
         for (String term : parts) {
-            Double coeff;
-            Integer degree;
-            if(term.contains("x")) {
+            Double coeff = null;
+            Integer degree = null;
+            if (term.contains("x")) {
                 Pattern pattern = Pattern.compile("([-]?\\d*)[^+]x?\\^?(\\d*)");
                 Matcher matcher = pattern.matcher(term);
-
+                String x;
                 if (matcher.find()) {
                     x = matcher.group(1);
 
                     coeff = (matcher.group(1) == null || matcher.group(1).isEmpty() || matcher.group(1).equals("-")) ? 1.0 : Double.parseDouble(matcher.group(1));
                     degree = (matcher.group(2) == null || matcher.group(2).isEmpty()) ? 0 : Integer.parseInt(matcher.group(2));
 
-                    if(degree==0)
-                        degreeToCoeff.put(1, coeff);
-                    else degreeToCoeff.put(degree, coeff);
+                    if (degree == 0)
+                        degreeAndCoeffs.put(1, coeff);
+                    else degreeAndCoeffs.put(degree, coeff);
                 }
-            }else if(term != ""){
+            } else if (term != "") {
                 coeff = Double.parseDouble(term);
-                degreeToCoeff.put(0, coeff);
+                degreeAndCoeffs.put(0, coeff);
             }
         }
-    return degreeToCoeff;
+        return degreeAndCoeffs;
     }
 
 
@@ -60,15 +57,14 @@ public class Polynomial {
 
     public TreeMap orderHashMap(HashMap<Integer, Double> polynomials) {
         TreeMap<Integer, Double> sortHash = new TreeMap<>(Collections.reverseOrder());
-        Polynomial result = new Polynomial();
         sortHash.putAll(polynomials);
 
         return sortHash;
     }
 
-    public String finalPolynomial(Polynomial a){
+    public String finalPolynomial(Polynomial a) {
         String result;
-        return result=listTree(a.orderHashMap(a.polynomials));
+        return result = listTree(a.orderHashMap(a.polynomials));
 
     }
 
@@ -79,27 +75,27 @@ public class Polynomial {
             int degree = entry.getKey();
             double coefficient = entry.getValue();
             if (coefficient == 0) {
-                continue; // skip terms with a coefficient of zero
+                continue;
             }
             if (coefficient > 0 && !isFirstTerm) {
-                sb.append(" + "); // add a plus sign for positive terms (except the first term)
+                sb.append(" + ");
             }
             if (coefficient < 0) {
-                sb.append(" - "); // add a minus sign for negative terms
-                coefficient = -coefficient; // make the coefficient positive for formatting purposes
+                sb.append(" - ");
+                coefficient = -coefficient;
             }
             if (coefficient != 1 || degree == 0) {
-                sb.append(coefficient); // print the coefficient (except for x^0)
+                sb.append(coefficient);
             }
             if (degree > 1) {
-                sb.append("x^").append(degree); // print x^n
+                sb.append("x^").append(degree);
             } else if (degree == 1) {
-                sb.append("x"); // print x
+                sb.append("x");
             }
             isFirstTerm = false;
         }
         if (sb.length() == 0) {
-            sb.append("0"); // handle the case where the polynomial is zero
+            sb.append("0");
         }
         return sb.toString();
     }
@@ -140,51 +136,18 @@ public class Polynomial {
     }
 
 
-    public double getCoeff(Polynomial pol, Integer key) {
-        return pol.polynomials.get(key);
+    public Double getCoeff(TreeMap<Integer, Double> poltree) {
+        return poltree.firstEntry().getValue();
     }
 
-    void getHighestGrade(HashMap polynomials) {
-
+    public Integer getHighestGrade(TreeMap<Integer, Double> poltree) {
+        return poltree.firstKey();
     }
 
-    public static void main(String[] args) {
-        Polynomial first = new Polynomial();
-        Polynomial finalpol = new Polynomial();
-        // split dupa + in List<String>
-        //si replace la - cu +-
-        String poly = "-3x^2-x+5";
-
-        poly = poly.replace("-", "+-");
-
-        Map<Integer, Double> degreeToCoeff = new HashMap<>();
-
-        System.out.println(poly);
-        String[] parts = poly.split("\\+");
-        String x;
-        for (String term : parts) {
-            Double coeff;
-            Integer degree;
-            if(term.contains("x")) {
-                Pattern pattern = Pattern.compile("([-]?\\d*)[^+]x?\\^?(\\d*)");
-                Matcher matcher = pattern.matcher(term);
-
-                if (matcher.find()) {
-                    x = matcher.group(1);
-                    System.out.println(x);
-
-                    coeff = (matcher.group(1) == null || matcher.group(1).isEmpty() || matcher.group(1).equals("-")) ? 1.0 : Double.parseDouble(matcher.group(1));
-                    degree = (matcher.group(2) == null || matcher.group(2).isEmpty()) ? 0 : Integer.parseInt(matcher.group(2));
-
-                    if(degree==0)
-                    degreeToCoeff.put(1, coeff);
-                    else degreeToCoeff.put(degree, coeff);
-                }
-            }else if(term != ""){
-                coeff = Double.parseDouble(term);
-                degreeToCoeff.put(0, coeff);
-            }
-        }
-        System.out.println(degreeToCoeff);
+    public Integer getNextHighestGrade(TreeMap<Integer, Double> poltree) {
+        while (getCoeff(poltree) == 0)
+            poltree.remove(getHighestGrade(poltree));
+        return poltree.firstKey();
     }
+
 }
